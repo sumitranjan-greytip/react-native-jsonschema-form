@@ -8,12 +8,15 @@ import ToggleWidget from './ToggleWidget';
 import DateTimeWidget from './DateTimeWidget';
 
 export default {
-  TextWidget,
+  // Use TextInputWidget for editable text fields (TextWidget is read-only display)
+  TextWidget: TextInputWidget,
   TextInputWidget,
   TextareaWidget: TextInputWidget,
   EmailWidget: TextInputWidget,
   URLWidget: TextInputWidget,
   PasswordWidget: TextInputWidget,
+  // Keep the original TextWidget available as ReadOnlyTextWidget if needed
+  ReadOnlyTextWidget: TextWidget,
   NumberWidget,
   IntegerWidget: NumberWidget,
   CheckboxWidget,

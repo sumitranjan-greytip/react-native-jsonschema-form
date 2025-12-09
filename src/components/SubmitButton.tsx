@@ -13,18 +13,27 @@ export interface EnhancedSubmitButtonProps<
   textStyle?: TextStyle;
 }
 
-const SubmitButton = <T extends any, S extends StrictRJSFSchema = RJSFSchema, F extends FormContextType = any>({
-  uiSchema,
-  formContext,
-  loading = false,
-  style,
-  textStyle,
-}: EnhancedSubmitButtonProps<T, S, F>) => {
+const SubmitButton = <T extends any, S extends StrictRJSFSchema = RJSFSchema, F extends FormContextType = any>(props: any) => {
+  const { uiSchema, registry, loading = false, style, textStyle } = props;
+  
+  // formContext is passed through registry, not directly
+  const formContext = registry?.formContext || props.formContext;
+  
   const submitText = uiSchema?.['ui:submitButtonOptions']?.submitText || 'Submit';
   const customProps = uiSchema?.['ui:submitButtonOptions']?.props || {};
   const disabled = (formContext as any)?.readOnly || customProps.loading || loading;
   const customStyle = customProps.style || {};
   const customTextStyle = customProps.textStyle || {};
+  
+  // Get the submit function from formContext (passed by Form component)
+  const handleSubmit = () => {
+    if ((formContext as any)?.__submitForm) {
+      console.log("Calling __submitForm...");
+      (formContext as any).__submitForm();
+    } else {
+      console.log("ERROR: __submitForm not found in formContext!");
+    }
+  };
 
   return (
     <TouchableOpacity 
@@ -36,6 +45,7 @@ const SubmitButton = <T extends any, S extends StrictRJSFSchema = RJSFSchema, F 
       ]}
       disabled={disabled}
       activeOpacity={0.7}
+      onPress={handleSubmit}
     >
       {(loading || customProps.loading) ? (
         <ActivityIndicator color="#FFFFFF" />

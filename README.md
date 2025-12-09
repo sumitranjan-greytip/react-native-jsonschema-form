@@ -5,7 +5,7 @@ A React Native implementation of [react-jsonschema-form](https://github.com/rjsf
 ## Installation
 
 ```bash
-npm install react-native-jsonschema-form
+npm install @greytip/react-native-jsonschema-form
 ```
 
 ## Dependencies
@@ -26,7 +26,7 @@ Here's a simple example of how to use the form:
 
 ```tsx
 import React from 'react';
-import { Form } from 'react-native-jsonschema-form';
+import { Form } from '@greytip/react-native-jsonschema-form';
 import { RJSFSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 
